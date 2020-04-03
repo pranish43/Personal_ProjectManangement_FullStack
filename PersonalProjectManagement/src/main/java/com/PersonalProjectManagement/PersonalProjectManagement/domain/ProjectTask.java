@@ -1,5 +1,6 @@
 package com.PersonalProjectManagement.PersonalProjectManagement.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CollectionId;
 
 import javax.persistence.*;
@@ -19,12 +20,19 @@ public class ProjectTask {
     private String acceptanceCriteria;
     private String status;
     private Integer priority;
+
+
     private Date dueDate;
     private Date create_At;
     private Date update_At;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "backlog_id", updatable = false,nullable =false )
+    @JsonIgnore
+    private Backlog backlog;
+
     @Column(updatable = false)
-    private String projectIdentifie;
+    private String projectIdentifier;
 
     public ProjectTask() {
     }
@@ -101,12 +109,20 @@ public class ProjectTask {
         this.update_At = update_At;
     }
 
-    public String getProjectIdentifie() {
-        return projectIdentifie;
+    public String getProjectIdentifier() {
+        return projectIdentifier;
     }
 
-    public void setProjectIdentifie(String projectIdentifie) {
-        this.projectIdentifie = projectIdentifie;
+    public void setProjectIdentifier(String projectIdentifier) {
+        this.projectIdentifier = projectIdentifier;
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
     }
 
     @PrePersist
@@ -131,7 +147,7 @@ public class ProjectTask {
                 ", dueDate=" + dueDate +
                 ", create_At=" + create_At +
                 ", update_At=" + update_At +
-                ", projectIdentifie='" + projectIdentifie + '\'' +
+                ", projectIdentifie='" + projectIdentifier + '\'' +
                 '}';
     }
 }
