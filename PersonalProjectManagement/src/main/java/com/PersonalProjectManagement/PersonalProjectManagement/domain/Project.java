@@ -35,10 +35,14 @@ public class Project {
     private Date created_At;
     private Date updated_At;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+
+    private Backlog blacklog;
+
     public Project() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -100,6 +104,14 @@ public class Project {
 
     public void setUpdated_At(Date updated_At) {
         this.updated_At = updated_At;
+    }
+
+    public Backlog getBlacklog() {
+        return blacklog;
+    }
+
+    public void setBlacklog(Backlog blacklog) {
+        this.blacklog = blacklog;
     }
 
     @PrePersist
