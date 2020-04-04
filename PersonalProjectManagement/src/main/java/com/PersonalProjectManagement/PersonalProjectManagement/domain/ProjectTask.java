@@ -15,24 +15,22 @@ public class ProjectTask {
     private Long id;
     @Column(updatable = false)
     private String projectSequence;
-    @NotBlank(message = "Include project summary")
+    @NotBlank(message = "Please include a project summary")
     private String summary;
     private String acceptanceCriteria;
     private String status;
     private Integer priority;
-
-
     private Date dueDate;
-    private Date create_At;
-    private Date update_At;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "backlog_id", updatable = false,nullable =false )
+    @JoinColumn(name="backlog_id", updatable = false, nullable = false)
     @JsonIgnore
     private Backlog backlog;
 
     @Column(updatable = false)
-    private String projectIdentifier;
+    private String projectIdentifer;
+    private Date create_At;
+    private Date update_At;
 
     public ProjectTask() {
     }
@@ -93,6 +91,14 @@ public class ProjectTask {
         this.dueDate = dueDate;
     }
 
+    public String getProjectIdentifer() {
+        return projectIdentifer;
+    }
+
+    public void setProjectIdentifer(String projectIdentifer) {
+        this.projectIdentifer = projectIdentifer;
+    }
+
     public Date getCreate_At() {
         return create_At;
     }
@@ -109,14 +115,6 @@ public class ProjectTask {
         this.update_At = update_At;
     }
 
-    public String getProjectIdentifier() {
-        return projectIdentifier;
-    }
-
-    public void setProjectIdentifier(String projectIdentifier) {
-        this.projectIdentifier = projectIdentifier;
-    }
-
     public Backlog getBacklog() {
         return backlog;
     }
@@ -131,7 +129,7 @@ public class ProjectTask {
     }
 
     @PreUpdate
-    protected void onUpdate() {
+    protected void onUpdate(){
         this.update_At = new Date();
     }
 
@@ -145,9 +143,9 @@ public class ProjectTask {
                 ", status='" + status + '\'' +
                 ", priority=" + priority +
                 ", dueDate=" + dueDate +
+                ", projectIdentifer='" + projectIdentifer + '\'' +
                 ", create_At=" + create_At +
                 ", update_At=" + update_At +
-                ", projectIdentifie='" + projectIdentifier + '\'' +
                 '}';
     }
 }

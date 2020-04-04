@@ -24,15 +24,13 @@ public class ProjectTaskService  {
         BacklogSequence++;
 
         projectTask.setProjectSequence(projectIdentifier +"-"+ BacklogSequence);
-        projectTask.setProjectIdentifier(projectIdentifier);
+        projectTask.setProjectIdentifer(projectIdentifier);
 
-//        if(projectTask.getPriority()==0||projectTask.getPriority()==null){
-//            projectTask.setPriority(3);
-//        }
+
         if(projectTask.getStatus()==""|| projectTask.getStatus()==null){
             projectTask.setStatus("TO_DO");
         }
-        
+
         return projectTaskRepository.save(projectTask);
 
     }

@@ -11,27 +11,31 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
-@RequestMapping("/api/backlog")
-@CrossOrigin
-public class BacklogController {
+    @RestController
+    @RequestMapping("/api/backlog")
+    @CrossOrigin
+    public class BacklogController {
 
-    @Autowired
-    private ProjectTaskService projectTaskService;
+        @Autowired
+        private ProjectTaskService projectTaskService;
 
-    @Autowired
-    private ValidationMapErrorService validationMapErrorService;
+        @Autowired
+        private ValidationMapErrorService mapValidationErrorService;
 
-    @PostMapping("/{backlog_id}")
-    public ResponseEntity<?> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask, BindingResult result, @PathVariable String backlog_id){
-        ResponseEntity<?> errorMap= validationMapErrorService.ValidationMapService(result);
-        if(errorMap != null) return errorMap;
 
-        ProjectTask projectTask1 = projectTaskService.addProjectTask(backlog_id,projectTask);
+        @PostMapping("/{backlog_id}")
+        public ResponseEntity<?> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask,
+                                                BindingResult result, @PathVariable String backlog_id){
 
-        return new ResponseEntity<ProjectTask>(projectTask1, HttpStatus.CREATED);
+            ResponseEntity<?> erroMap = mapValidationErrorService.ValidationMapService(result);
+            if (erroMap != null) return erroMap;
+
+            ProjectTask projectTask1 = projectTaskService.addProjectTask(backlog_id, projectTask);
+
+            return new ResponseEntity<ProjectTask>(projectTask1, HttpStatus.CREATED);
+
+        }
 
 
     }
-}
 
