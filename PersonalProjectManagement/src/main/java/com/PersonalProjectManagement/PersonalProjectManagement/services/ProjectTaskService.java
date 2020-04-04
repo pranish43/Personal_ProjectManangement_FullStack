@@ -22,6 +22,7 @@ public class ProjectTaskService  {
         projectTask.setBacklog(backlog);
         Integer BacklogSequence  = backlog.getPTSequence();
         BacklogSequence++;
+        backlog.setPTSequence(BacklogSequence);
 
         projectTask.setProjectSequence(projectIdentifier +"-"+ BacklogSequence);
         projectTask.setProjectIdentifer(projectIdentifier);
@@ -30,6 +31,11 @@ public class ProjectTaskService  {
         if(projectTask.getStatus()==""|| projectTask.getStatus()==null){
             projectTask.setStatus("TO_DO");
         }
+        if(projectTask.getPriority()==null){
+            projectTask.setPriority(3);
+        }
+
+
 
         return projectTaskRepository.save(projectTask);
 

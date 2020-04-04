@@ -27,8 +27,8 @@ import javax.validation.Valid;
         public ResponseEntity<?> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask,
                                                 BindingResult result, @PathVariable String backlog_id){
 
-            ResponseEntity<?> erroMap = mapValidationErrorService.ValidationMapService(result);
-            if (erroMap != null) return erroMap;
+            ResponseEntity<?> errorMap = mapValidationErrorService.ValidationMapService(result);
+            if (errorMap != null) return errorMap;
 
             ProjectTask projectTask1 = projectTaskService.addProjectTask(backlog_id, projectTask);
 
