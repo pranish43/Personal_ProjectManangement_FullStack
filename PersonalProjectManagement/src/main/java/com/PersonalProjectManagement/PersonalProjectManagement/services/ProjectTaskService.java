@@ -6,6 +6,7 @@ import com.PersonalProjectManagement.PersonalProjectManagement.domain.ProjectTas
 import com.PersonalProjectManagement.PersonalProjectManagement.repositories.BacklogRepository;
 import com.PersonalProjectManagement.PersonalProjectManagement.repositories.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,7 +26,7 @@ public class ProjectTaskService  {
         backlog.setPTSequence(BacklogSequence);
 
         projectTask.setProjectSequence(projectIdentifier +"-"+ BacklogSequence);
-        projectTask.setProjectIdentifer(projectIdentifier);
+        projectTask.setProjectIdentifier(projectIdentifier);
 
 
         if(projectTask.getStatus()==""|| projectTask.getStatus()==null){
@@ -40,4 +41,9 @@ public class ProjectTaskService  {
         return projectTaskRepository.save(projectTask);
 
     }
+   public Iterable<ProjectTask> findBacklogById(String id){
+        return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
+    }
+
+
 }
