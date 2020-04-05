@@ -5,6 +5,7 @@ import com.PersonalProjectManagement.PersonalProjectManagement.domain.Project;
 import com.PersonalProjectManagement.PersonalProjectManagement.domain.ProjectTask;
 import com.PersonalProjectManagement.PersonalProjectManagement.exceptions.ProjectNotFoundException;
 import com.PersonalProjectManagement.PersonalProjectManagement.repositories.BacklogRepository;
+import com.PersonalProjectManagement.PersonalProjectManagement.repositories.ProjectRepository;
 import com.PersonalProjectManagement.PersonalProjectManagement.repositories.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,9 @@ public class ProjectTaskService  {
 
     @Autowired
     private ProjectTaskRepository projectTaskRepository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
 
     public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask){
         try{
@@ -49,6 +53,12 @@ public class ProjectTaskService  {
 
     }
    public Iterable<ProjectTask> findBacklogById(String id){
+        Project project = projectRepository.findByProjectIdentifier(id);
+
+        if(project == null){
+            throw new ProjectNotFoundException("Project with ID: "+ id+ "does not exist");
+        }
+
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
     }
 
